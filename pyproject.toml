@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "os3c"
+version = "0.1.0"
+description = ""
+authors = ["Leo Feradero Nugraha <leoferaderonugraha@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+selectolax = "^0.3.12"
+httpx = "^0.23.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
