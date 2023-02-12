@@ -1,8 +1,34 @@
-# OS3C (Open Source Software Auditor/Checker)
+# OS3C (Open Source Security Auditor/Checker)
 
 ---
 
 OS3C is an open-source security testing tool for websites. Its primary focus is to help website owners and developers ensure the security and compliance of their websites. This tool is built with the ease of maintainability and extensibility in mind.
+
+---
+
+## Usage
+
+---
+
+To run OS3C, you need to use the `run.py` script and specify the target URL using the `-u` or `--url` option.
+
+```sh
+python3 run.py -u https://www.example.com
+```
+
+or if you have poetry installed:
+
+- Install the dependencies
+
+```sh
+poetry install
+```
+
+- Run with poetry
+
+```sh
+poetry run python ./run.py -u https://www.example.com 
+```
 
 ---
 
