@@ -1,10 +1,17 @@
-from .callback import Params
+from .callback import CallbackHandler, CallbackLogger, Params
 from selectolax.parser import HTMLParser
 
 
-def callback(params: Params) -> None:
-    html = HTMLParser(params.raw_html)
-    title = html.tags('title')[0]
-    name = '.'.join(__name__.split('.')[-2:])
+@CallbackHandler.register
+async def title_extractor(params: Params, logger: CallbackLogger) -> None:
+    if not params.raw_html:
+        return None
 
-    print(f"{name}: [+] {params.url} -> {title.text()}")
+    html = HTMLParser(params.raw_html)
+    title = html.tags('title')
+
+    if not title:
+        logger.error(f"{params.request.url} -> Title not found!")
+        return None
+
+    logger.info(f"{params.request.url} -> {title[0].text()}")

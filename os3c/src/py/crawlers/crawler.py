@@ -1,4 +1,4 @@
-from ..callbacks import Callback
+from ..callbacks.callback import Request
 from dataclasses import dataclass
 from typing import List, Protocol, runtime_checkable
 
@@ -11,13 +11,12 @@ class Result:
 
 @runtime_checkable
 class AsyncCrawler(Protocol):
-    def __init__(self, callbacks: List[Callback]) -> None:
-        pass
-
     async def start(self,
                     url: str,
                     ignore_path: List[str]) -> List[Result]:
         pass
 
-    async def fetch_links(self, raw_html: bytes) -> List[str]:
+    async def fetch_links(self,
+                          raw_html: bytes,
+                          prev_url: str) -> List[Request]:
         pass

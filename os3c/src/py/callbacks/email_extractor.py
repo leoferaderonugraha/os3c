@@ -1,17 +1,21 @@
-from .callback import Params
+from .callback import CallbackHandler, CallbackLogger, Params
 
 import re
 
 
-def callback(params: Params) -> None:
-    pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
-    html = params.raw_html.decode()
-    name = '.'.join(__name__.split('.')[-2:])
+CACHED_EMAILS = set()
 
-    emails = set()
+
+@CallbackHandler.register
+async def email_extractor(params: Params, logger: CallbackLogger) -> None:
+    if not params.raw_html:
+        return None
+
+    pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
+    html = str(params.raw_html)
 
     for match in re.finditer(pattern, html):
         email = match.group(0)
-        if email not in emails:
-            print(f"{name}: [+] Email found: {email}")
-            emails.add(email)
+        if email not in CACHED_EMAILS:
+            logger.info(f"Email found: {email}")
+            CACHED_EMAILS.add(email)
