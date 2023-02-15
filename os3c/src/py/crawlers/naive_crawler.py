@@ -146,7 +146,7 @@ class NaiveCrawler(AsyncCrawler):
 
             if not request_parts.netloc and request_parts.path:
                 path = request_parts.path
-                request.url = f"{scheme}://{base_domain}{path}"
+                request.url = urljoin(f"{scheme}://{base_domain}", path)
 
                 if request in self._queue or request in self._visited:
                     continue
